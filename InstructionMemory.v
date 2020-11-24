@@ -7,7 +7,7 @@ output [31:0] inst;
 	assign inst = InstMem[addr[31:2]];
 
 	initial begin 
-		$readmemb("Mem.inst", InstMem);
+		$readmemb("Mem.inst", InstMem); //Upload instructions from file "Mem.inst"
 	end	
 
 

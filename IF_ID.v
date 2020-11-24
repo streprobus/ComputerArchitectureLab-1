@@ -11,16 +11,16 @@ output [31:0] instOut;
 	Reg32 pcReg (
 		.clk(clk),
 		.rst(rst),
-		.en(1'b1),
-		.d(PCin),
+		.en(~freeze), // if freeze = 1, nothing new is stored after posedge clk
+		.d(PCin & {32{~flush}}), // if flush = 1, 0 is stored in register after clk posedge, else data is stored
 		.q(PCout)
 		);
 
 	Reg32 instReg (
 		.clk(clk),
 		.rst(rst),
-		.en(1'b1),
-		.d(instIn),
+		.en(~freeze), // if freeze = 1, nothing new is stored after posedge clk
+		.d(instIn & {32{~flush}}), // if flush = 1, 0 is stored in register after clk posedge, else data is stored
 		.q(instOut)
 		);
 endmodule 
