@@ -4,7 +4,7 @@ input rst;
 input freeze;
 input branchTaken;
 input [31:0] branchAddress;
-output [31:0] PCPlus;
+output [31:0] PCPlus; // it means PC+4
 output [31:0] inst;
 	
 	wire [31:0] PCin, PCout;

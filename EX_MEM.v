@@ -4,11 +4,11 @@ input rst;
 input [31:0] PCin;
 output [31:0] PCout;
 
-	Reg32 pcReg (
+	Reg32 PC_Reg (
 		.clk(clk),
 		.rst(rst),
-		.en(1'b1),
 		.d(PCin),
+		.en(1'b1),
 		.q(PCout)
 		);
 
