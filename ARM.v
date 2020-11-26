@@ -43,31 +43,30 @@ input rst;
 	/*=====Modules=====*/
 
 	//Stage IF//
-	IF IF_stage(
+	IF_Stage if_stage(
 		.clk(clk),
 		.rst(rst),
 		.freeze(freeze), 
 		.branchTaken(branchTaken), 
 		.branchAddress(branchAddress), 
-		.PCPlus(IF_PC), 
-		.inst(IF_Inst)
+		.PC(IF_PC), 
+		.Instruction(IF_Inst)
 		);
-
 	
 	//Stage IF_ID Registers//
-	IF_ID IF_ID_stage(
+	IF_Stage_Reg if_stage_reg(
 		.clk(clk), 
 		.rst(rst), 
-		.PCin(IF_PC), 
-		.instIn(IF_Inst), 
-		.flush(flush), 
 		.freeze(freeze), 
-		.PCout(IF_ID_PC), 
-		.instOut(IF_ID_Inst)
+		.flush(flush), 
+		.PC_in(IF_PC), 
+		.Instruction_in(IF_Inst), 
+		.PC(IF_ID_PC), 
+		.Instruction(IF_ID_Inst)
 		);
 
 	//Stage ID//
-	ID ID_stage(
+	ID_Stage id_stage(
 		.clk(clk),
 		.rst(rst),
 		.PCin(IF_ID_PC),
@@ -75,7 +74,7 @@ input rst;
 		);
 
 	//Stage ID_EX Registers//
-	ID_EX ID_EX_stage(
+	ID_Stage_Reg id_stage_reg(
 		.clk(clk),
 		.rst(rst),
 		.PCin(ID_PC),
@@ -83,15 +82,14 @@ input rst;
 		);
 
 	//Stage EX//
-	EX EX_stage(
+	EXE_Stage exe_stage(
 		.clk(clk),
-		.rst(rst),
 		.PCin(ID_EX_PC),
 		.PCout(EX_PC)
 		);
 
 	//Stage EX_MEM Registers//
-	EX_MEM EX_MEM_stage(
+	EXE_reg exe_reg(
 		.clk(clk),
 		.rst(rst),
 		.PCin(EX_PC),
@@ -99,7 +97,7 @@ input rst;
 		);
 
 	//Stage MEM//
-	MEM MEM_stage(
+	Memory memory(
 		.clk(clk),
 		.rst(rst),
 		.PCin(EX_MEM_PC),
@@ -107,7 +105,7 @@ input rst;
 		);
 
 	//Stage MEM_WB Registers//
-	MEM_WB MEM_WB_stage(
+	MEM_reg mem_reg(
 		.clk(clk),
 		.rst(rst),
 		.PCin(MEM_PC),
@@ -115,7 +113,7 @@ input rst;
 		);
 	
 	//Stage WB//
-	WB WB_stage(
+	WB_stage wb_stage(
 		.clk(clk),
 		.rst(rst),
 		.PCin(MEM_WB_PC),
