@@ -4,7 +4,7 @@ input rst;
 input [31:0] PCin;
 output [31:0] PCout;
 
-	Reg32 PC_Reg (
+	Reg #(.WIDTH(32)) PC_Reg (
 		.clk(clk),
 		.rst(rst),
 		.d(PCin),

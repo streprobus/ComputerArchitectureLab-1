@@ -1,5 +1,5 @@
 module ID_Stage_Reg (clk, rst, flush, WB_EN_IN, MEM_R_EN_IN, MEM_W_EN_IN,B_IN, S_IN, 
-			EXEC_CMD_IN, PC_IN, Val_Rn_IN, Val_Rm_IN,
+			EXE_CMD_IN, PC_IN, Val_Rn_IN, Val_Rm_IN,
 			imm_IN, Shift_operand_IN, Signed_imm_24_IN, Dest_IN,
 			WB_EN, MEM_R_EN, MEM_W_EN, B, S, EXE_CMD, PC, Val_Rn, Val_Rm,
 			imm, Shift_operand, Signed_imm_24, Dest);
@@ -11,7 +11,7 @@ input MEM_R_EN_IN;
 input MEM_W_EN_IN;
 input B_IN; 
 input S_IN; 
-input [3:0] EXEC_CMD_IN;
+input [3:0] EXE_CMD_IN;
 input [31:0] PC_IN;
 input [31:0] Val_Rn_IN;
 input [31:0] Val_Rm_IN;
@@ -78,8 +78,8 @@ output [3:0] Dest;
 		.clk(clk),
 		.rst(rst),
 		.en(1'b1),
-		.d(EXEC_CMD_IN & {4{~flush}}), // if flush = 1, 0 is stored in register after clk posedge, else data is stored
-		.q(EXEC_CMD)
+		.d(EXE_CMD_IN & {4{~flush}}), // if flush = 1, 0 is stored in register after clk posedge, else data is stored
+		.q(EXE_CMD)
 		);
 
 	Reg #(.WIDTH(32)) PC_reg (

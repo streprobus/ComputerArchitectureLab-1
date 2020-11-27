@@ -57,6 +57,7 @@ input rst;
 	wire WB_WriteBack_En;
 	wire [3:0] WB_Dest;
 	wire [31:0] WB_Value;
+	wire [31:0] WB_PC; //just for test, must delete
 
 	//HazardDetectionUnit
 	wire freeze, hazard;
@@ -105,7 +106,7 @@ input rst;
 		.S(ID_S), 
 		.EXE_CMD(ID_EXE_CMD), 
 		.Val_Rn(ID_Val_Rn), 
-		.Val_Rm(ID_Val_RM), 
+		.Val_Rm(ID_Val_Rm), 
 		.imm(ID_imm), 
 		.Shift_operand(ID_Shift_operand), 
 		.Signed_imm_24(ID_Signed_imm_24), 
@@ -125,7 +126,7 @@ input rst;
 		.MEM_W_EN_IN(ID_MEM_W_EN),
 		.B_IN(ID_B), 
 		.S_IN(ID_S), 
-		.EXEC_CMD_IN(ID_EXEC_CMD), 
+		.EXE_CMD_IN(ID_EXE_CMD), 
 		.PC_IN(IF_ID_PC), 
 		.Val_Rn_IN(ID_Val_Rn), 
 		.Val_Rm_IN(ID_Val_Rm),

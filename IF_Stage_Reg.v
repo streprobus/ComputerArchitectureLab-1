@@ -18,7 +18,7 @@ output [31:0] Instruction;
 		.q(PC)
 		);
 
-	Reg32 #(.WIDTH(32)) instReg (
+	Reg #(.WIDTH(32)) instReg (
 		.clk(clk),
 		.rst(rst),
 		.en(~freeze), // if freeze = 1, nothing new is stored after posedge clk

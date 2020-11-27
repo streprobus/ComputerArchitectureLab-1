@@ -38,18 +38,19 @@ output Two_src;
 	assign Rd = Instruction[15:12];
 	assign Rm = Instruction[3:0];
 
+
 	assign imm = Instruction[25];
-	assign cond = Instruction[31:28];
 	assign Signed_imm_24 = Instruction[23:0];
 	assign Shift_operand = Instruction[11:0];
 	assign Dest = Rd;
 
 	wire [1:0] mode;
-	wire [3:0] opcode;
-	wire S_inst;
+	wire [3:0] opcode, cond;
+	wire S_in;
+	assign cond = Instruction[31:28];
 	assign mode = Instruction[27:26];
 	assign opcode = Instruction[24:21];
-	assign S_inst = Instruction[20];
+	assign S_in = Instruction[20];
 
 	//to hazard detect module
 	assign Two_src = ~imm | MEM_W_EN;
@@ -85,7 +86,7 @@ output Two_src;
 	ControlUnit controlunit (
 			.mode(mode), 
 			.opcode(opcode), 
-			.S(S_inst), 
+			.S(S_in), 
 			.WB_EN(CU_WB_EN), 
 			.MEM_R_EN(CU_MEM_R_EN), 
 			.MEM_W_EN(CU_MRM_W_EN), 
