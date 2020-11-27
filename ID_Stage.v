@@ -89,7 +89,7 @@ output Two_src;
 			.S(S_in), 
 			.WB_EN(CU_WB_EN), 
 			.MEM_R_EN(CU_MEM_R_EN), 
-			.MEM_W_EN(CU_MRM_W_EN), 
+			.MEM_W_EN(CU_MEM_W_EN), 
 			.B(CU_B), 
 			.S_out(CU_S), 
 			.EXE_CMD(CU_EXE_CMD)

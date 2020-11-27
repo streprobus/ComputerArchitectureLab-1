@@ -92,6 +92,7 @@ output reg [3:0] EXE_CMD;
 			EXE_CMD = 4'b0110;
 		end
 		else if (LDR) begin
+			WB_EN = 1'b1;
 			MEM_R_EN = 1'b1;
 			EXE_CMD = 4'b0010;
 		end
