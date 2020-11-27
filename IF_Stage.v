@@ -16,13 +16,13 @@ output [31:0] Instruction;
 			.out(PCin)
 			);
 	
-	Reg32 PC_reg(
-		.clk(clk),
-		.rst(rst),
-		.d(PCin),
-		.en(~freeze),
-		.q(PCout)
-		);
+	Reg #(.WIDTH(32)) PC_reg (
+			.clk(clk),
+			.rst(rst),
+			.d(PCin),
+			.en(~freeze),
+			.q(PCout)
+			);
 
 	InstructionMemory InstMem(
 			.addr(PCout),

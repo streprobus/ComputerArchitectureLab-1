@@ -8,7 +8,7 @@ input [31:0] Instruction_in;
 output [31:0] PC;
 output [31:0] Instruction;
 
-	Reg32 pcReg (
+	Reg #(.WIDTH(32)) pcReg (
 		.clk(clk),
 		.rst(rst),
 		.en(~freeze), // if freeze = 1, nothing new is stored after posedge clk
@@ -16,7 +16,7 @@ output [31:0] Instruction;
 		.q(PC)
 		);
 
-	Reg32 instReg (
+	Reg32 #(.WIDTH(32)) instReg (
 		.clk(clk),
 		.rst(rst),
 		.en(~freeze), // if freeze = 1, nothing new is stored after posedge clk

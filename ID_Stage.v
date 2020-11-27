@@ -1,7 +1,7 @@
 module ID_Stage (clk, rst, Instruction, Result_WB, writeBackEn, Dest_wb, hazard, SR,
 			WB_EN, MEM_R_EN, MEM_W_EN, B, S, EXE_CMD, 
 			Val_Rn, Val_Rm, 
-			imm, Shift_operand, signed_imm_24, Dest,
+			imm, Shift_operand, Signed_imm_24, Dest,
 			src1, src2, Two_src);
 input clk;
 input rst;
@@ -26,7 +26,7 @@ output [31:0] Val_Rn;
 output [31:0] Val_Rm;
 output imm;
 output [11:0] Shift_operand;
-output [23:0] signed_imm_24;
+output [23:0] Signed_imm_24;
 output [3:0] Dest;
 //to hazard detect module
 output [3:0] src1;
@@ -40,7 +40,7 @@ output Two_src;
 
 	assign imm = Instruction[25];
 	assign cond = Instruction[31:28];
-	assign signed_imm_24 = Instruction[23:0];
+	assign Signed_imm_24 = Instruction[23:0];
 	assign Shift_operand = Instruction[11:0];
 	assign Dest = Rd;
 
