@@ -18,7 +18,7 @@ output [31:0] reg2;
 	always @(negedge clk or posedge rst) begin
 		if (rst) begin
 			for (i = 0; i < 14; i=i+1)
-				registers[i] <= 0;
+				registers[i] <= 32'b0;
 		end
 		else if (writeBackEn) begin
 			registers[Dest_wb] <= Result_WB;

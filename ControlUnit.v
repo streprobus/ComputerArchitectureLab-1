@@ -11,7 +11,6 @@ output reg [3:0] EXE_CMD;
 
 	reg MOV, MVN, ADD, ADC, SUB, SBC, AND, ORR, EOR, CMP, TST, LDR, STR, BRANCH;
 
-
 	//Decode opcode - combinational
 	always @(mode or opcode or S) begin
 		{MOV, MVN, ADD, ADC, SUB, SBC,

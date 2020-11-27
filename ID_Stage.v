@@ -33,4 +33,74 @@ output [3:0] src1;
 output [3:0] src2;
 output Two_src;
 
+	wire [3:0] Rn, Rd, Rm;
+	assign Rn = Instruction[19:16];
+	assign Rd = Instruction[15:12];
+	assign Rm = Instruction[3:0];
+
+	assign imm = Instruction[25];
+	assign cond = Instruction[31:28];
+	assign signed_imm_24 = Instruction[23:0];
+	assign Shift_operand = Instruction[11:0];
+	assign Dest = Rd;
+
+	wire [1:0] mode;
+	wire [3:0] opcode;
+	wire S_inst;
+	assign mode = Instruction[27:26];
+	assign opcode = Instruction[24:21];
+	assign S_inst = Instruction[20];
+
+	//to hazard detect module
+	assign Two_src = ~imm | MEM_W_EN;
+	assign src1 = Rn;
+	assign src2 = MEM_W_EN? Rd: Rm;
+
+	//register file module 
+	RegisterFile registerfile (
+			.clk(clk), 
+			.rst(rst), 
+			.src1(src1), 
+			.src2(src2), 
+			.Dest_wb(Dest_wb), 
+			.Result_WB(Result_WB), 
+			.writeBackEn(writeBackEn), 
+			.reg1(Val_Rn), 
+			.reg2(Val_Rm)
+			);
+
+	//condition check
+	wire MetCondition;
+
+	ConditionCheck conditioncheck(
+			.Cond(cond), 
+			.SR(SR), 
+			.MetCondition(MetCondition)
+			);
+
+	//control unit and control signals
+	wire CU_WB_EN, CU_MEM_R_EN, CU_MEM_W_EN, CU_B, CU_S;
+	wire [3:0] CU_EXE_CMD;
+
+	ControlUnit controlunit (
+			.mode(mode), 
+			.opcode(opcode), 
+			.S(S_inst), 
+			.WB_EN(CU_WB_EN), 
+			.MEM_R_EN(CU_MEM_R_EN), 
+			.MEM_W_EN(CU_MRM_W_EN), 
+			.B(CU_B), 
+			.S_out(CU_S), 
+			.EXE_CMD(CU_EXE_CMD)
+			);
+
+	//control signals multiplexer
+	wire control_signals_sel;
+	assign control_signals_sel = ~MetCondition | hazard;
+	
+	assign {WB_EN, MEM_R_EN, MEM_W_EN, B, S, EXE_CMD}
+		= ~control_signals_sel? {CU_WB_EN, CU_MEM_R_EN, CU_MEM_W_EN, CU_B, CU_S, CU_EXE_CMD} : 9'b0;
+
+	
+
 endmodule
