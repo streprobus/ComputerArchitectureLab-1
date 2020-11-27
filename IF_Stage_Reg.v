@@ -8,6 +8,8 @@ input [31:0] Instruction_in;
 output [31:0] PC;
 output [31:0] Instruction;
 
+	/*IMPORTANT: we prioritze freeze over flush in here*/
+
 	Reg #(.WIDTH(32)) pcReg (
 		.clk(clk),
 		.rst(rst),
