@@ -3,6 +3,6 @@ Phase 1 completed and tested.
 
 ## Reserved Parts
   ### Cajjad
-  * No part reserved.
+  * ID Stage
   ### Arya
   * No part reserved.
