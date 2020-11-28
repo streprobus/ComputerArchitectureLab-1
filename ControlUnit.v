@@ -84,11 +84,11 @@ output reg [3:0] EXE_CMD;
 			EXE_CMD = 4'b1000;
 		end
 		else if (CMP) begin
-			WB_EN = 1'b1;
+			//WB_EN = 1'b1;
 			EXE_CMD = 4'b0100;
 		end
 		else if (TST) begin
-			WB_EN = 1'b1;
+			//WB_EN = 1'b1;
 			EXE_CMD = 4'b0110;
 		end
 		else if (LDR) begin
