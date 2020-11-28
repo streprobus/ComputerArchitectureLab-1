@@ -5,6 +5,6 @@ Phase 2: ID_stage and ID_Stage_Reg completed and tested.
 
 ## Reserved Parts
   ### Cajjad
-  * No part reserved.
+  * EXE_Stage and EXE_reg
   ### Arya
   * No part reserved.
