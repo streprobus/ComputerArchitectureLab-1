@@ -1,9 +1,11 @@
-module WB_stage (clk, rst, PCin, PCout);
-input clk;
-input rst;
-input [31:0] PCin;
-output [31:0] PCout;
+module WB_stage (clk, rst, ALU_result, MEM_result, MEM_R_en, out);
+input clk; //not needed
+input rst; //not needed
+input [31:0] ALU_result;
+input [31:0] MEM_result;
+input MEM_R_en;
+output [31:0] out;
 
-	assign PCout = PCin;
+	assign out = MEM_R_en ? MEM_result: ALU_result;
 
 endmodule 

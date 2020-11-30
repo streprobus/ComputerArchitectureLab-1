@@ -152,12 +152,13 @@ input rst;
 	//Stage EX//
 	EXE_Stage exe_stage(
 		.clk(clk),
+		.rst(rst),
 		.PCin(ID_EX_PC),
 		.PCout(EX_PC)
 		);
 
 	//Status Register
-	Reg #(.WIDTH(4)) status_register(
+	StatusRegister status_register(
 		.clk(clk),
 		.rst(rst),
 		.d(status_bits),

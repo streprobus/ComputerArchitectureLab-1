@@ -1,6 +1,7 @@
-module EXE_Stage (clk, EXE_CMD, MEM_R_EN, MEM_W_EN, PC, Val_Rn, Val_Rm, 
+module EXE_Stage (clk, rst, EXE_CMD, MEM_R_EN, MEM_W_EN, PC, Val_Rn, Val_Rm, 
 			imm, Shift_operand, signed_imm_24, SR, ALU_result, Br_addr, status);
-input clk;
+input clk; //not needed
+input rst; //not needed 
 input [3:0] EXE_CMD;
 input MEM_R_EN;
 input MEM_W_EN;
