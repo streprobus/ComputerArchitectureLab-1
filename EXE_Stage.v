@@ -34,7 +34,7 @@ output [3:0] status;
 	Val2Generator val2generator(
 			.Val_Rm(Val_Rm),
 			.imm(imm),
-			.is_lds_or_str(is_ldr_or_str),
+			.is_ldr_or_str(is_ldr_or_str),
 			.Shift_operand(Shift_operand),
 			.Val2out(Val2)
 			);
