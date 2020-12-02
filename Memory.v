@@ -4,10 +4,10 @@ input rst;
 input MEMread;
 input MEMwrite;
 input [31:0] address;
-input [31:0] data;
-output [31:0] MEM_result;
+input signed [31:0] data;
+output signed [31:0] MEM_result;
 
-	reg [31:0] memory [0:65535]; //256 KB memory
+	reg signed [31:0] memory [0:65535]; //256 KB memory
 
 	assign MEM_result = MEMread? memory[(address - 1024)>>2] : 32'bz;
 

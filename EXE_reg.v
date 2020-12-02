@@ -1,4 +1,4 @@
-module EXE_reg (clk, rst, WB_en_in, MEM_R_EN_in, MEM_W_EN_in, ALU_result_in, ST_val_in, Dest_in, 
+module EXE_reg (clk, rst, WB_en_in, MEM_R_EN_in, MEM_W_EN_in, ALU_result_in, ST_val_in, Dest_in,
 		WB_en, MEM_R_EN, MEM_W_EN, ALU_result, ST_val, Dest);
 input clk;
 input rst;
@@ -62,6 +62,5 @@ output [3:0] Dest;
 		.en(1'b1),
 		.q(Dest)
 		);
-
 
 endmodule 

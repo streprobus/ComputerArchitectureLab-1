@@ -20,7 +20,7 @@ input rst;
 	wire [11:0] ID_Shift_operand;
 	wire [23:0] ID_Signed_imm_24;
 	wire [3:0] ID_Dest, ID_src1, ID_src2;
-	wire ID_Two_src;
+	wire ID_Two_src, ID_is_Rn_valid;
 
 	//Stage ID_EX Registers//
 	wire ID_EX_WB_EN, ID_EX_MEM_R_EN, ID_EX_MEM_W_EN, ID_EX_B, ID_EX_S;
@@ -117,7 +117,8 @@ input rst;
 		.Dest(ID_Dest),
 		.src1(ID_src1), 
 		.src2(ID_src2), 
-		.Two_src(ID_Two_src)
+		.Two_src(ID_Two_src),
+		.is_Rn_valid(ID_is_Rn_valid)
 		);
 
 	//Stage ID_EX Registers//
@@ -190,7 +191,7 @@ input rst;
 		.MEM_W_EN_in(ID_EX_MEM_W_EN), 
 		.ALU_result_in(EX_ALU_result), 
 		.ST_val_in(ID_EX_Val_Rm), 
-		.Dest_in(ID_EX_Dest), 
+		.Dest_in(ID_EX_Dest),
 		.WB_en(EX_MEM_WB_en), 
 		.MEM_R_EN(EX_MEM_MEM_R_EN), 
 		.MEM_W_EN(EX_MEM_MEM_W_EN), 
@@ -239,12 +240,13 @@ input rst;
 	//Hazard Detection Unit//
 	hazard_Detection_Unit hazard_detection_unit(
 		.src1(ID_src1), 
-		.src2(ID_src2), 
+		.src2(ID_src2),
+		.is_src1_valid(ID_is_Rn_valid),
 		.Two_src(ID_Two_src), 
 		.Exe_Dest(ID_EX_Dest), 
-		.Exe_WB_EN(ID_EX_WB_EN), 
+		.Exe_WB_EN(ID_EX_WB_EN),
 		.Mem_Dest(EX_MEM_Dest), 
-		.Mem_WB_EN(EX_MEM_WB_en), 
+		.Mem_WB_EN(EX_MEM_WB_en),
 		.hazard_Detected(hazard)
 		);
 

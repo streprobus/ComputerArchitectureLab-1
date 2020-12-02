@@ -2,7 +2,7 @@ module ID_Stage (clk, rst, Instruction, Result_WB, writeBackEn, Dest_wb, hazard,
 			WB_EN, MEM_R_EN, MEM_W_EN, B, S, EXE_CMD, 
 			Val_Rn, Val_Rm, 
 			imm, Shift_operand, Signed_imm_24, Dest,
-			src1, src2, Two_src);
+			src1, src2, Two_src, is_Rn_valid);
 input clk;
 input rst;
 //from IF Reg
@@ -32,6 +32,7 @@ output [3:0] Dest;
 output [3:0] src1;
 output [3:0] src2;
 output Two_src;
+output is_Rn_valid;
 
 	wire [3:0] Rn, Rd, Rm;
 	assign Rn = Instruction[19:16];
@@ -56,6 +57,10 @@ output Two_src;
 	assign Two_src = ~imm | MEM_W_EN;
 	assign src1 = Rn;
 	assign src2 = MEM_W_EN? Rd: Rm;
+	assign is_Rn_valid = ((opcode == 4'b1101) //MOV
+				| (opcode == 4'b1111) //MVN
+				| (Instruction == 32'b11100000000000000000000000000000)) //NOP
+				? 1'b0: 1'b1; //This is used in hazard detection unit
 
 	//register file module 
 	RegisterFile registerfile (

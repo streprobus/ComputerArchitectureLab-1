@@ -22,8 +22,12 @@ output [3:0] status;
 
 	assign N = result[31];
 	assign Z = ~(|result);
-	assign V = ((EXE_CMD == 4'b0010) | (EXE_CMD == 4'b0011) | (EXE_CMD == 4'b0100) | (EXE_CMD == 4'b0101)) ? //is command Add or Sum?
-			(result[31] % ~Val1[31] & ~Val2[31]) | (~result[31] % Val1[31] & Val2[31]) 
-			: 1'b0;
+
+	assign V = ((EXE_CMD == 4'b0010) | (EXE_CMD == 4'b0011))? //is command Add?
+			(result[31] & ~Val1[31] & ~Val2[31]) | (~result[31] & Val1[31] & Val2[31])
+		  :((EXE_CMD == 4'b0100) | (EXE_CMD == 4'b0101))? //is command Sub?
+			(result[31] & ~Val1[31] & Val2[31]) | (~result[31] & Val1[31] & ~Val2[31])
+		  : 1'b0;
+
 
 endmodule

@@ -103,6 +103,6 @@ output reg [3:0] EXE_CMD;
 	end
 
 	assign B = BRANCH;
-	assign S_out = S;
+	assign S_out = ~B? S : 1'b0;
 
 endmodule 

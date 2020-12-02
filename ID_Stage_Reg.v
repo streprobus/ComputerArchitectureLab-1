@@ -33,7 +33,6 @@ output [11:0] Shift_operand;
 output [23:0] Signed_imm_24;
 output [3:0] Dest;
 
-
 	Reg #(.WIDTH(1)) WB_EN_reg (
 		.clk(clk),
 		.rst(rst),
@@ -137,5 +136,4 @@ output [3:0] Dest;
 		.d(Dest_IN & {4{~flush}}), // if flush = 1, 0 is stored in register after clk posedge, else data is stored
 		.q(Dest)
 		);
-
 endmodule 
