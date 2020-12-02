@@ -9,7 +9,7 @@ Phase 4: Memory and WriteBack multiplexer implemented.
 
 Phase 5: Debugging completed.
 
-**Input instructions successfully running. Project completed.**
+**Input instructions are successfully running. Project completed.**
 
 ## Reserved Parts
   ### Cajjad
