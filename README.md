@@ -7,7 +7,9 @@ Phase 3: EXE_Stage implemented.
 
 Phase 4: Memory and WriteBack multiplexer implemented. 
 
-Phase 5: Debugging is being done.
+Phase 5: Debugging completed.
+
+**Input instructions successfully running. Project completed.**
 
 ## Reserved Parts
   ### Cajjad
