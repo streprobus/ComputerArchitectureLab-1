@@ -18,7 +18,7 @@ output [3:0] status;
 
 	//Branch Address Calculator
 	wire [31:0] signed_EX_imm24;
-	assign signed_EX_imm24 = {{8{signed_imm_24[23]}},signed_imm_24} <<< 2;
+	assign signed_EX_imm24 = {{8{signed_imm_24[23]}},signed_imm_24} << 2;
 
 	Adder32 br_addr_adder(
 			.inp0(PC), 

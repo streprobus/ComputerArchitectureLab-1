@@ -20,7 +20,7 @@ output [31:0] Instruction;
 			.clk(clk),
 			.rst(rst),
 			.d(PCin),
-			.en(~freeze),
+			.en(~freeze | branchTaken),
 			.q(PCout)
 			);
 
