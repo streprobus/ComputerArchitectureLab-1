@@ -28,7 +28,7 @@ output imm;
 output [11:0] Shift_operand;
 output [23:0] Signed_imm_24;
 output [3:0] Dest;
-//to hazard detect module
+//to hazard detect module and forwarding unit
 output [3:0] src1;
 output [3:0] src2;
 output Two_src;

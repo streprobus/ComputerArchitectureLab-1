@@ -1,8 +1,8 @@
 module ID_Stage_Reg (clk, rst, flush, WB_EN_IN, MEM_R_EN_IN, MEM_W_EN_IN,B_IN, S_IN, 
 			EXE_CMD_IN, PC_IN, Val_Rn_IN, Val_Rm_IN,
-			imm_IN, Shift_operand_IN, Signed_imm_24_IN, Dest_IN,
+			imm_IN, Shift_operand_IN, Signed_imm_24_IN, Dest_IN, src1_IN, src2_IN,
 			WB_EN, MEM_R_EN, MEM_W_EN, B, S, EXE_CMD, PC, Val_Rn, Val_Rm,
-			imm, Shift_operand, Signed_imm_24, Dest);
+			imm, Shift_operand, Signed_imm_24, Dest, src1, src2);
 input clk;
 input rst;
 input flush;
@@ -19,6 +19,8 @@ input imm_IN;
 input [11:0] Shift_operand_IN;
 input [23:0] Signed_imm_24_IN;
 input [3:0] Dest_IN;
+input [3:0] src1_IN;
+input [3:0] src2_IN;
 output WB_EN;
 output MEM_R_EN;
 output MEM_W_EN;
@@ -32,6 +34,8 @@ output imm;
 output [11:0] Shift_operand;
 output [23:0] Signed_imm_24;
 output [3:0] Dest;
+output [3:0] src1;
+output [3:0] src2;
 
 	Reg #(.WIDTH(1)) WB_EN_reg (
 		.clk(clk),
@@ -136,4 +140,21 @@ output [3:0] Dest;
 		.d(Dest_IN & {4{~flush}}), // if flush = 1, 0 is stored in register after clk posedge, else data is stored
 		.q(Dest)
 		);
+
+	Reg #(.WIDTH(4)) src1_reg (
+		.clk(clk),
+		.rst(rst),
+		.en(1'b1),
+		.d(src1_IN & {4{~flush}}), // if flush = 1, 0 is stored in register after clk posedge, else data is stored
+		.q(src1)
+		);
+
+	Reg #(.WIDTH(4)) src2_reg (
+		.clk(clk),
+		.rst(rst),
+		.en(1'b1),
+		.d(src2_IN & {4{~flush}}), // if flush = 1, 0 is stored in register after clk posedge, else data is stored
+		.q(src2)
+		);
+
 endmodule 

@@ -29,7 +29,7 @@ input rst;
 	wire ID_EX_imm; 
 	wire [11:0] ID_EX_Shift_operand;
 	wire [23:0] ID_EX_Signed_imm_24;
-	wire [3:0] ID_EX_Dest;
+	wire [3:0] ID_EX_Dest, ID_EX_src1, ID_EX_src2;
 
 	//Stage EX//
 	wire flush, branchTaken;
@@ -63,10 +63,12 @@ input rst;
 	assign WB_WriteBack_En = MEM_WB_WB_EN;
 	assign WB_Dest = MEM_WB_Dest;
 
-	//HazardDetectionUnit
+	//Hazard Detection Unit//
 	wire freeze, hazard;
 	assign freeze = hazard;
 
+	//Forwarding Unit//
+	wire [1:0] FU_Sel_src1, FU_Sel_src2;
 
 	/*=====Modules=====*/
 
@@ -139,6 +141,8 @@ input rst;
 		.Shift_operand_IN(ID_Shift_operand), 
 		.Signed_imm_24_IN(ID_Signed_imm_24), 
 		.Dest_IN(ID_Dest),
+		.src1_IN(ID_src1),
+		.src2_IN(ID_src2),
 		.WB_EN(ID_EX_WB_EN), 
 		.MEM_R_EN(ID_EX_MEM_R_EN), 
 		.MEM_W_EN(ID_EX_MEM_W_EN), 
@@ -151,7 +155,9 @@ input rst;
 		.imm(ID_EX_imm), 
 		.Shift_operand(ID_EX_Shift_operand), 
 		.Signed_imm_24(ID_EX_Signed_imm_24), 
-		.Dest(ID_EX_Dest)
+		.Dest(ID_EX_Dest),
+		.src1(ID_EX_src1),
+		.src2(ID_EX_src2)
 		);
 
 	//Stage EX//
@@ -168,6 +174,10 @@ input rst;
 		.Shift_operand(ID_EX_Shift_operand), 
 		.signed_imm_24(ID_EX_Signed_imm_24), 
 		.SR(SR), 
+		.Sel_src1(FU_Sel_src1), 
+		.Sel_src2(FU_Sel_src2), 
+		.MEM_ALU_result(EX_MEM_ALU_result), 
+		.WB_Value(WB_Value),
 		.ALU_result(EX_ALU_result), 
 		.Br_addr(EX_Br_addr), 
 		.status(EX_status_bits)
@@ -249,5 +259,18 @@ input rst;
 		.Mem_WB_EN(EX_MEM_WB_en),
 		.hazard_Detected(hazard)
 		);
+
+	//Forwarding Unit//
+	ForwardingUnit forwarding_unit(
+		.src1(ID_EX_src1), 
+		.src2(ID_EX_src2), 
+		.MEM_Dest(EX_MEM_Dest), 
+		.MEM_WB_EN(EX_MEM_WB_en), 
+		.WB_Dest(MEM_WB_Dest), 
+		.WB_WB_EN(MEM_WB_WB_EN), 
+		.Sel_src1(FU_Sel_src1), 
+		.Sel_src2(FU_Sel_src2)
+		);
+
 
 endmodule 

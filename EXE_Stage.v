@@ -1,5 +1,6 @@
 module EXE_Stage (clk, rst, EXE_CMD, MEM_R_EN, MEM_W_EN, PC, Val_Rn, Val_Rm, 
-			imm, Shift_operand, signed_imm_24, SR, ALU_result, Br_addr, status);
+			imm, Shift_operand, signed_imm_24, SR, Sel_src1, Sel_src2, 
+			MEM_ALU_result, WB_Value, ALU_result, Br_addr, status);
 input clk; //not needed
 input rst; //not needed 
 input [3:0] EXE_CMD;
@@ -12,6 +13,10 @@ input imm;
 input [11:0] Shift_operand;
 input [23:0] signed_imm_24;
 input [3:0] SR;
+input [1:0] Sel_src1;
+input [1:0] Sel_src2;
+input [31:0] MEM_ALU_result;
+input [31:0] WB_Value;
 output [31:0] ALU_result;
 output [31:0] Br_addr;
 output [3:0] status;
@@ -39,13 +44,26 @@ output [3:0] status;
 			.Val2out(Val2)
 			);
 
+	//Muliplexers for ALU inputs
+	wire [31:0] ALU_Input_1, ALU_Input_2;
+	
+	assign ALU_Input_1 = (Sel_src1 == 2'b00)? Val_Rn:
+			     (Sel_src1 == 2'b01)? MEM_ALU_result: 
+			     (Sel_src1 == 2'b10)? WB_Value:
+			      Val_Rn;
+
+	assign ALU_Input_2 = (Sel_src2 == 2'b00)? Val2:
+			     (Sel_src2 == 2'b01)? MEM_ALU_result: 
+			     (Sel_src2 == 2'b10)? WB_Value:
+			      Val_Rn;
+
 	//ALU
 	wire carry_in;
 	assign carry_in = SR[1];
 
 	ALU alu(
-		.Val1(Val_Rn),
-		.Val2(Val2),
+		.Val1(ALU_Input_1),
+		.Val2(ALU_Input_2),
 		.carry_in(carry_in),
 		.EXE_CMD(EXE_CMD),
 		.result(ALU_result),
