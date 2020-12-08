@@ -11,6 +11,8 @@ Phase 5: Debugging completed.
 
 **Input instructions are successfully running. Project completed.**
 
+Phase 6: Forwarding Unit added.
+
 ## Reserved Parts
   ### Cajjad
   * No part reserved.
