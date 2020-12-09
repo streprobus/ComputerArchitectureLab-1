@@ -35,27 +35,29 @@ output [3:0] status;
 	wire is_ldr_or_str;
 	assign is_ldr_or_str = MEM_R_EN | MEM_W_EN;
 
+	wire [31:0] Val2Gen_Rm_Input;
+	assign Val2Gen_Rm_Input = (Sel_src2 == 2'b00)? Val_Rm:
+			     	  (Sel_src2 == 2'b01)? MEM_ALU_result: 
+			          (Sel_src2 == 2'b10)? WB_Value:
+			      	  Val_Rm;
+
 	wire [31:0] Val2;
 	Val2Generator val2generator(
-			.Val_Rm(Val_Rm),
+			.Val_Rm(Val2Gen_Rm_Input),
 			.imm(imm),
 			.is_ldr_or_str(is_ldr_or_str),
 			.Shift_operand(Shift_operand),
 			.Val2out(Val2)
 			);
 
-	//Muliplexers for ALU inputs
-	wire [31:0] ALU_Input_1, ALU_Input_2;
+	//Muliplexers for ALU input 1
+	wire [31:0] ALU_Input_1;
 	
 	assign ALU_Input_1 = (Sel_src1 == 2'b00)? Val_Rn:
 			     (Sel_src1 == 2'b01)? MEM_ALU_result: 
 			     (Sel_src1 == 2'b10)? WB_Value:
 			      Val_Rn;
 
-	assign ALU_Input_2 = (Sel_src2 == 2'b00)? Val2:
-			     (Sel_src2 == 2'b01)? MEM_ALU_result: 
-			     (Sel_src2 == 2'b10)? WB_Value:
-			      Val_Rn;
 
 	//ALU
 	wire carry_in;
@@ -63,7 +65,7 @@ output [3:0] status;
 
 	ALU alu(
 		.Val1(ALU_Input_1),
-		.Val2(ALU_Input_2),
+		.Val2(Val2),
 		.carry_in(carry_in),
 		.EXE_CMD(EXE_CMD),
 		.result(ALU_result),

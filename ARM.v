@@ -1,7 +1,7 @@
-module ARM (clk, rst);
+module ARM (clk, rst, Forward_EN);
 input clk;
 input rst;
-
+input Forward_EN;
 
 
 	/*=====Wires=====*/
@@ -255,8 +255,10 @@ input rst;
 		.Two_src(ID_Two_src), 
 		.Exe_Dest(ID_EX_Dest), 
 		.Exe_WB_EN(ID_EX_WB_EN),
+		.EXE_MEM_R_EN(ID_EX_MEM_R_EN),
 		.Mem_Dest(EX_MEM_Dest), 
 		.Mem_WB_EN(EX_MEM_WB_en),
+		.Forward_EN(Forward_EN),
 		.hazard_Detected(hazard)
 		);
 

@@ -3,10 +3,12 @@
 module TB();
 
 	reg clk = 1, rst = 0;
+	reg Forward_EN = 1;
 
 	ARM arm (
 		.clk(clk),
-		.rst(rst)
+		.rst(rst),
+		.Forward_EN(Forward_EN)
 		);
 
 	
